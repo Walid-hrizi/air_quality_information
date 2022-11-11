@@ -7,7 +7,7 @@ exports.find = (req, res) => {
     // const latitude = 2.352222;
     const longitude = req.params.longitude;
     const latitude = req.params.latitude;
-    fetch(`http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=ef6cce7f-40d2-4ea6-8460-1cec0224abf8`, {
+    fetch(`http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=f6ad6585-59bc-4198-8a61-2b502eca3b6a`, {
         method: 'GET',
         headers: {
             contentType: 'application/json',
