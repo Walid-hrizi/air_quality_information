@@ -63,16 +63,17 @@ exports.maxzone = (req, res) => {
         {
             $group:
             {
-                _id: "$Result.data.city",
-                Air_Quality: { $max: "$Result.Pollution.aqius" },
-                Date_Created: { $max: "$Result.Pollution.Date_Created" },
-            },
+                
+                _id: {Zone:"$Result.data.city",Date_Created:"$Result.Pollution.Date_Created", Air_Quality: { $max: "$Result.Pollution.aqius" }},
+            }
         },
         {
             '$limit': 1
         }
     ]).then(data => {
         res.send(data);
+         console.log(data);
+
     })
         .catch(err => {
             res.status(500).send({
