@@ -5,6 +5,8 @@ var router = require("express").Router();
   router.get("/air/:latitude,:longitude", air_quality.find);
   // Get datetime where the paris zone is the most polluted
   router.get("/air/maxzone", air_quality.maxzone);
+  // Get All
+  router.get("/air/findAll", air_quality.findAll);
  
   app.use("/api", router);
 };

@@ -6,7 +6,7 @@ const today = (`${format(x, 'dd.MM.yyyy do  hh:mm:ss  a')}`);
 const ObjectID = require('mongodb').ObjectId;
 //Schema : I specified the result of nearest city: by area and pollution
 var documentAir_quality = mongoose.Schema(
-    {
+    { 
         Result: {
             data: {
                 city: String,

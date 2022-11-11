@@ -7,7 +7,7 @@ exports.find = (req, res) => {
     // const latitude = 2.352222;
     const longitude = req.params.longitude;
     const latitude = req.params.latitude;
-    fetch(`http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=f6ad6585-59bc-4198-8a61-2b502eca3b6a`, {
+    fetch(`http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=c3f679e8-e3ff-49a2-9fb9-365bd16875c6`, {
         method: 'GET',
         headers: {
             contentType: 'application/json',
@@ -17,7 +17,7 @@ exports.find = (req, res) => {
         .then(res => res.json())
         // I specified the result of nearest city: by area and pollution
         .then(data => {
-            res.send({ Result: ({ data: ({ city: data.data.city, state: data.data.state, country: data.data.country, Pollution: data.data.current.pollution }) }) });
+            res.send(data);
             const D_Air = { Result: ({ data: ({ city: data.data.city, state: data.data.state, country: data.data.country, Pollution: data.data.current.pollution }) }) }
             console.log(D_Air)
             var x = new Date().getTime();
@@ -61,18 +61,13 @@ exports.find = (req, res) => {
 exports.maxzone = (req, res) => {
     documentAir.aggregate([
         {
-            $group:
-            {
-                
-                _id: {Zone:"$Result.data.city",Date_Created:"$Result.Pollution.Date_Created", Air_Quality: { $max: "$Result.Pollution.aqius" }},
+            '$match': {
+                'Result.data.city': 'Tunis'
             }
-        },
-        {
-            '$limit': 1
         }
     ]).then(data => {
-        res.send(data);
-         console.log(data);
+        res.send(data[0]);
+        console.log(data);
 
     })
         .catch(err => {
@@ -82,3 +77,20 @@ exports.maxzone = (req, res) => {
             });
         });
 };
+
+// Retrieve all FACT_PROD_Declaration from the database.
+exports.findAll = (req, res) => {
+
+    documentAir.find()
+      .then(data => {
+        res.send(data);
+      })
+  
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "error while retrieving the FACT_PROD_Declaration."
+        });
+      });
+  };
+  
